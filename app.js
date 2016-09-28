@@ -1,83 +1,69 @@
 
-const WeatherUndergroundWidget = React.createClass({
+const WeatherUndergroundWidget = () =>
+	<span style={{
+		display: 'block !important', 
+		width: "320px",
+		textAlign: "center",
+		fontFamily: "sans-serif",
+		fontSize: "12px"
+	}}>
+		<a href="http://www.wunderground.com/cgi-bin/findweather/getForecast?query=zmw:27705.1.99999&bannertypeclick=wu_clean2day" title="Durham, North Carolina Weather Forecast" target="_blank">
+			<img src="http://weathersticker.wunderground.com/weathersticker/cgi-bin/banner/ban/wxBanner?bannertype=wu_clean2day_cond&airportcode=KIGX&ForcedCity=Durham&ForcedState=NC&zip=27705&language=EN" alt="Find more about Weather in Durham, NC" width="600" />
+		</a><br />
+		<a href="http://www.wunderground.com/cgi-bin/findweather/getForecast?query=zmw:27705.1.99999&bannertypeclick=wu_clean2day" title="Get latest Weather Forecast updates" style={{fontFamily: "sans-serif", fontSize: "12px"}} target="_blank">Click for weather forecast</a>
+	</span>
 
-	render: function() {
-		return <span style={{
-			display: 'block !important', 
-			width: "320px",
-			textAlign: "center",
-			fontFamily: "sans-serif",
-			fontSize: "12px"
-		}}>
-			<a href="http://www.wunderground.com/cgi-bin/findweather/getForecast?query=zmw:27705.1.99999&bannertypeclick=wu_clean2day" title="Durham, North Carolina Weather Forecast" target="_blank">
-				<img src="http://weathersticker.wunderground.com/weathersticker/cgi-bin/banner/ban/wxBanner?bannertype=wu_clean2day_cond&airportcode=KIGX&ForcedCity=Durham&ForcedState=NC&zip=27705&language=EN" alt="Find more about Weather in Durham, NC" width="600" />
-			</a><br />
-			<a href="http://www.wunderground.com/cgi-bin/findweather/getForecast?query=zmw:27705.1.99999&bannertypeclick=wu_clean2day" title="Get latest Weather Forecast updates" style={{fontFamily: "sans-serif", fontSize: "12px"}} target="_blank">Click for weather forecast</a>
-		</span>
-	}
-})
 
-const Forum = React.createClass({
+const Forum = () =>
+	<div className="container fluid">
+		<form>
+			<div className="form-group">
+				<textarea className="form-control status-box" rows="2" placeholder="What's on your mind?"></textarea>
+			</div>
+		</form>
+		<div className="button-group pull-right">
+			<p className="counter">140</p>
+			<a href="#" className="btn btn-primary">Post</a>
+		</div>
 
-	render: function() {
-		return <div className="container fluid">
-				<form>
-					<div className="form-group">
-						<textarea className="form-control status-box" rows="2" placeholder="What's on your mind?"></textarea>
-					</div>
-				</form>
-				<div className="button-group pull-right">
-					<p className="counter">140</p>
-					<a href="#" className="btn btn-primary">Post</a>
-				</div>
-
-				<ul className="posts">
-				</ul>
-			   </div>
-	}
-})
-
-const Tabs = React.createClass({
-
-	render: function() {
-		return <div>
-					<ul className="nav nav-tabs" role="tablist">{this.props.children}</ul>
-
-	 				<div className="tab-content">
-
-						{React.Children.map(this.props.children, tab => {
-							var klass = "tab-pane active"
-							if(!tab.props.active){
-								klass = "tab-pane"
-							}
-							
-							return <div className={klass} id={tab.props.label.replace(/\s/g, '')}>{tab.props.children}</div>
-						})}
-					</div>
-				</div>
-
-	}
-})
-
-Tabs.Tab = React.createClass({
-	propTypes: {
-		active: React.PropTypes.bool,
-		label: React.PropTypes.string.isRequired,
-	},
-
-	render: function() {
+		<ul className="posts">
+		</ul>
+	</div>
 	
-		return <li className={this.props.active ? "active" : ""} ><a href={`#${this.props.label.replace(/\s/g, '')}`} role="tab" data-toggle="tab">{this.props.label}</a></li>
- 
-	}
-})
+
+const Tabs = props => 
+	<div>
+		<ul className="nav nav-tabs" role="tablist">{props.children}</ul>
+
+			<div className="tab-content">
+
+			{React.Children.map(props.children, tab => {
+				var klass = "tab-pane active"
+				if(!tab.props.active){
+					klass = "tab-pane"
+				}
+				
+				return <div className={klass} id={tab.props.label.replace(/\s/g, '')}>{tab.props.children}</div>
+			})}
+		</div>
+	</div>
 
 
-const Stats = React.createClass({
-	render: function() {
-		return <iframe src="https://docs.google.com/spreadsheets/d/1lucBasv0plhda3L5S4SFnxgQ8q__Jj_JVguCX228LyE/pubhtml?widget=true&amp;headers=false" width="700" height="400"></iframe>
-	}
-})
+
+Tabs.Tab = props =>
+	<li className={props.active ? "active" : ""} ><a href={`#${props.label.replace(/\s/g, '')}`} role="tab" data-toggle="tab">{props.label}</a></li>
+
+Tabs.Tab.propTypes = {
+	active: React.PropTypes.bool,
+	label: React.PropTypes.string.isRequired,
+}
+
+
+
+const Stats = () =>	
+	<iframe src="https://docs.google.com/spreadsheets/d/1lucBasv0plhda3L5S4SFnxgQ8q__Jj_JVguCX228LyE/pubhtml?widget=true&amp;headers=false" width="700" height="400"></iframe>
+	
+
 
 
 ReactDOM.render(
@@ -126,5 +112,3 @@ ReactDOM.render(
 
 		document.getElementById("app")
 	)
-
-
