@@ -49,7 +49,8 @@ const Tabs = React.createClass({
 							if(!tab.props.active){
 								klass = "tab-pane"
 							}
-							return <div className={klass} id={tab.props.link}>{tab.props.children}</div>
+							
+							return <div className={klass} id={tab.props.label.replace(/\s/g, '')}>{tab.props.children}</div>
 						})}
 					</div>
 				</div>
@@ -59,8 +60,8 @@ const Tabs = React.createClass({
 
 Tabs.Tab = React.createClass({
 	render: function() {
-
-		return <li className={this.props.active ? "active" : ""} ><a href={`#${this.props.link}`} role="tab" data-toggle="tab">{this.props.label}</a></li>
+	
+		return <li className={this.props.active ? "active" : ""} ><a href={`#${this.props.label.replace(/\s/g, '')}`} role="tab" data-toggle="tab">{this.props.label}</a></li>
  
 	}
 })
@@ -95,19 +96,19 @@ ReactDOM.render(
 				<div className="container">
 										
 					<Tabs>
-						<Tabs.Tab active link="tabs-schedule" label="Schedule">
+						<Tabs.Tab active label="Schedule">
 							<iframe src="https://www.google.com/calendar/embed?showCalendars=0&amp;mode=WEEK&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=rc2dstbajg2j4674poicoo9g74%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=America%2FNew_York" style={{border: "solid 1px #777"}}  width="600" height="400" frameBorder="0" scrolling="no"></iframe>
 						</Tabs.Tab>
 						
-						<Tabs.Tab link="tabs-stats" label="Statsheets">
+						<Tabs.Tab label="Statsheets">
 							<Stats/>
 						</Tabs.Tab>
 						
-						<Tabs.Tab link="tabs-forecast" label="Weather Forecast">
+						<Tabs.Tab label="Weather Forecast">
 							<WeatherUndergroundWidget/>
 						</Tabs.Tab>
 						
-						<Tabs.Tab link="tabs-forum" label="Forum">
+						<Tabs.Tab label="Forum">
 							<Forum/>
 						</Tabs.Tab>
 					</Tabs>
