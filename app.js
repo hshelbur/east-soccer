@@ -38,6 +38,7 @@ const Forum = React.createClass({
 })
 
 const Tabs = React.createClass({
+
 	render: function() {
 		return <div>
 					<ul className="nav nav-tabs" role="tablist">{this.props.children}</ul>
@@ -59,6 +60,11 @@ const Tabs = React.createClass({
 })
 
 Tabs.Tab = React.createClass({
+	propTypes: {
+		active: React.PropTypes.bool,
+		label: React.PropTypes.string.isRequired,
+	},
+
 	render: function() {
 	
 		return <li className={this.props.active ? "active" : ""} ><a href={`#${this.props.label.replace(/\s/g, '')}`} role="tab" data-toggle="tab">{this.props.label}</a></li>
