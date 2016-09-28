@@ -39,14 +39,28 @@ const Forum = React.createClass({
 
 const Tabs = React.createClass({
 	render: function() {
-		return <ul className="nav nav-tabs" role="tablist">{this.props.children}</ul>
+		return <div>
+					<ul className="nav nav-tabs" role="tablist">{this.props.children}</ul>
+
+	 				<div className="tab-content">
+
+						{React.Children.map(this.props.children, tab => {
+							var klass = "tab-pane active"
+							if(!tab.props.active){
+								klass = "tab-pane"
+							}
+							return <div className={klass} id={tab.props.link}>{tab.props.children}</div>
+						})}
+					</div>
+				</div>
+
 	}
 })
 
 Tabs.Tab = React.createClass({
 	render: function() {
-	
-		return <li className={this.props.active ? "active" : ""} ><a href={this.props.link} role="tab" data-toggle="tab">{this.props.children}</a></li>
+
+		return <li className={this.props.active ? "active" : ""} ><a href={`#${this.props.link}`} role="tab" data-toggle="tab">{this.props.label}</a></li>
  
 	}
 })
@@ -81,34 +95,23 @@ ReactDOM.render(
 				<div className="container">
 										
 					<Tabs>
-						<Tabs.Tab active={true} link="#tabs-schedule">Schedule</Tabs.Tab>
-						<Tabs.Tab link="#tabs-stats">Statsheets</Tabs.Tab>
-						<Tabs.Tab link="#tabs-forecast">Two Day Forecast</Tabs.Tab>
-						<Tabs.Tab link="#tabs-forum">Forum</Tabs.Tab>
+						<Tabs.Tab active link="tabs-schedule" label="Schedule">
+							<iframe src="https://www.google.com/calendar/embed?showCalendars=0&amp;mode=WEEK&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=rc2dstbajg2j4674poicoo9g74%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=America%2FNew_York" style={{border: "solid 1px #777"}}  width="600" height="400" frameBorder="0" scrolling="no"></iframe>
+						</Tabs.Tab>
+						
+						<Tabs.Tab link="tabs-stats" label="Statsheets">
+							<Stats/>
+						</Tabs.Tab>
+						
+						<Tabs.Tab link="tabs-forecast" label="Weather Forecast">
+							<WeatherUndergroundWidget/>
+						</Tabs.Tab>
+						
+						<Tabs.Tab link="tabs-forum" label="Forum">
+							<Forum/>
+						</Tabs.Tab>
 					</Tabs>
 					
- 					<div className="tab-content">
-
-						<div className="active tab-pane" id="tabs-schedule">
-							<iframe src="https://www.google.com/calendar/embed?showCalendars=0&amp;mode=WEEK&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=rc2dstbajg2j4674poicoo9g74%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=America%2FNew_York" style={{border: "solid 1px #777"}}  width="600" height="400" frameBorder="0" scrolling="no"></iframe>
-						</div>
-												
-
-						<div className="tab-pane" id="tabs-forecast">
-							<WeatherUndergroundWidget/>
-						</div>						
-						
-
-						<div className="tab-pane" id="tabs-stats">
-							<Stats/>
-						</div>
-
-
-						<div className="tab-pane" id="tabs-forum">
-							<Forum/>
-						</div>
-
-					</div>
 				</div>
 			</div>
 
