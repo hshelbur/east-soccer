@@ -63,26 +63,24 @@ Tabs.Tab.propTypes = {
 const Stats = () =>	
 	<iframe src="https://docs.google.com/spreadsheets/d/1lucBasv0plhda3L5S4SFnxgQ8q__Jj_JVguCX228LyE/pubhtml?widget=true&amp;headers=false" width="700" height="400"></iframe>
 	
+const Masthead = props =>
+	<div className="container fluid">
+		<div className="jumbotron">
+			<h2 className="text-center">{props.label}</h2>
+		</div>
+	</div>
 
+const MainPage = () =>
+	<div>
 
+		<Masthead label="Voyager Academy Men's Soccer"/>
 
-ReactDOM.render(
-		
-		<div>
-
-			<div className="container fluid">
-				<div className="jumbotron">
-					<h2 className="text-center">Voyager Academy Mens Soccer</h2>
-				</div>
+		<div className="container">
+			
+			<div className="col-md-3">
+				<img className="text-right" src="http://files.milesplit.us/team_logos/28840" height="240" width="240" />
 			</div>
 
-
-			<div className="container">
-				
-				<div className="col-md-3">
-					<img className="text-right" src="http://files.milesplit.us/team_logos/28840" height="240" width="240" />
-				</div>
-			</div>	
 
 			<div className="col-md-9">
 				<div className="container">
@@ -107,8 +105,13 @@ ReactDOM.render(
 					
 				</div>
 			</div>
+		</div>
 
-		</div>,
+	</div>
+
+ReactDOM.render(
+		
+		<MainPage/>,
 
 		document.getElementById("app")
 	)
