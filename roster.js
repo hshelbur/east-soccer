@@ -4,15 +4,39 @@ const Button = props =>
 	</button>
 
 
-const PlayerProfile = (props) =>
-	<div className="well well-sm">						
-		<p className="text-center">{props.name}</p>
-		<img className="col-md-3" src="http://www.alvechurchlions.com/wp-content/uploads/2012/09/player_blank.jpeg" height="80" width="80" />
-		<p>Year: {props.year}</p>
-		<p>Position: {props.position}</p>
-		<Button label="Add Player" onClick={() => alert(props.name)}/>
 
-	</div>
+class PlayerProfile extends React.Component {
+	constructor () {
+		super();
+		this.state = {
+			selected: false
+		};
+		this.handleClick = this.handleClick.bind(this);
+	}
+	handleClick() {
+		this.setState({selected: !this.state.selected});
+	}	
+	render() {
+			
+			if(!this.state.selected) {
+				return <div className="well well-sm">						
+					<p className="text-center">{this.props.name}</p>
+					<img className="col-md-3" src="http://www.alvechurchlions.com/wp-content/uploads/2012/09/player_blank.jpeg" height="80" width="80" />
+					<p>Year: {this.props.year}</p>
+					<p>Position: {this.props.position}</p>
+					<Button label="Add Player" onClick={this.handleClick} />
+				</div>}
+			else{
+				return <div className="well well-sm">						
+					<p className="text-center">{this.props.name}</p>
+					<img className="col-md-3" src="http://www.alvechurchlions.com/wp-content/uploads/2012/09/player_blank.jpeg" height="80" width="80" />
+					<p>Year: {this.props.year}</p>
+					<p>Position: {this.props.position}</p>
+					<Button label="Remove Player" onClick={this.handleClick} />
+				</div>	
+				}
+	}
+}
 
 const Masthead = props =>
 	<div className="container fluid">
