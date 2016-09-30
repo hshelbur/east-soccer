@@ -43,6 +43,23 @@ const Masthead = props =>
 		</div>
 	</div>
 
+
+const PlayerLists = props =>
+	<div>
+		<div className="col-md-4">
+			<h4 className="text-center">Roster</h4>
+				
+			{props.players.map(function(player){
+				return <PlayerProfile key={player.id} name={player.name} year={player.year} position={player.position} />
+			})}
+		
+		</div>
+
+		<div className="col-md-4">
+			<h4 className="text-center">Selected Players</h4>
+		</div>
+	</div>
+
 const PLAYERS = [{id: "4", name: "Howard Shelburne", position: "Fucking Anywhere", year: "Pretty Damn Old"},
 				{id: "1", name: "Erin Turingan", position: "Cute Girl on the Field", year: "Forever Young"},
 				{id: "10", name: "Lionel Messi", position: "Dominance", year: "28"}]
@@ -51,18 +68,7 @@ ReactDOM.render(
 	<div>
 		<Masthead label="Voyager Academy Men's Soccer"/>
 
-		<div className="col-md-4">
-			<h4 className="text-center">Roster</h4>
-			
-			{PLAYERS.map(function(player){
-				return <PlayerProfile key={player.id} name={player.name} year={player.year} position={player.position} />
-			})}
-
-		</div>
-
-		<div className="col-md-4">
-			<h4 className="text-center">Selected Players</h4>
-		</div>
+		<PlayerLists players={PLAYERS} />
 
 	</div>,
 
