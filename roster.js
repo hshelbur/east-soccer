@@ -1,9 +1,7 @@
 const Button = props =>
-	<button onClick={props.onClick}  type="button" className="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+	<button onClick={props.onClick}  type="button" className="btn btn-primary" data-toggle="button" aria-pressed="false" autoComplete="off">
  		{props.label}
 	</button>
-
-
 
 class PlayerProfile extends React.Component {
 	constructor () {
@@ -45,7 +43,9 @@ const Masthead = props =>
 		</div>
 	</div>
 
-
+const PLAYERS = [{id: "4", name: "Howard Shelburne", position: "Fucking Anywhere", year: "Pretty Damn Old"},
+				{id: "1", name: "Erin Turingan", position: "Cute Girl on the Field", year: "Forever Young"},
+				{id: "10", name: "Lionel Messi", position: "Dominance", year: "28"}]
 
 ReactDOM.render(
 	<div>
@@ -53,9 +53,11 @@ ReactDOM.render(
 
 		<div className="col-md-4">
 			<h4 className="text-center">Roster</h4>
-			<PlayerProfile className="column" name="Howard Shelburne" year="Pretty Damn Old" position="Fucking Anywhere"/>
-			<PlayerProfile className="column" name="Erin Turingan" year="Forever Young" position="Cute Girl on the field"/>
-			<PlayerProfile className="column" name="Lionel Messi" year="28" position="Dominance"/>
+			
+			{PLAYERS.map(function(player){
+				return <PlayerProfile key={player.id} name={player.name} year={player.year} position={player.position} />
+			})}
+
 		</div>
 
 		<div className="col-md-4">
