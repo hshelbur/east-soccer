@@ -10,6 +10,17 @@ const Button = props =>
  		{props.label}
 	</button>
 
+const CreatePlayerForm = props =>
+	<div className="well well-sm">
+		<form className="PlayerForm">
+			<input type='text' placeholder='Name' value={props.name} />
+			<input type='text' placeholder='Year' value={props.year} />
+			<input type='text' placeholder='Position' value={props.position} />
+			<Button label='Add Player' />
+		</form>
+	</div>
+
+
 const PlayerProfile = props =>
 	<div className="well well-sm">
 		<p className="text-center">{props.name}</p>		
@@ -79,6 +90,7 @@ const PLAYERS = [{id: "4", name: "Howard Shelburne", position: "Fucking Anywhere
 ReactDOM.render(
 	<div>
 		<Masthead label="Voyager Academy Men's Soccer"/>
+		<CreatePlayerForm />
 
 		<PlayerLists players={PLAYERS} />
 
