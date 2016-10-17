@@ -1,0 +1,29 @@
+{
+  "name": "voyager-website",
+  "version": "0.1.0",
+  "description": "Soccer team management ",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hshelbur/voyager-soccer.git"
+  },
+  "keywords": [
+    "npm"
+  ],
+  "author": "Howard Shelburne",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/hshelbur/voyager-soccer/issues"
+  },
+  "homepage": "https://github.com/hshelbur/voyager-soccer#readme",
+  "devDependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.16.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2"
+  }
+}
