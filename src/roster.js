@@ -10,24 +10,34 @@ const Button = props =>
  		{props.label}
 	</button>
 
-const CreatePlayerForm = props =>
-	<div className="well well-sm">
-		<form className="PlayerForm">
-			<input type='text' placeholder='Name' value={props.name} />
-			<input type='text' placeholder='Year' value={props.year} />
-			<input type='text' placeholder='Position' value={props.position} />
-			<Button label='Add Player' />
-		</form>
-	</div>
+class CreatePlayerForm extends React.Component {
+	constructor(props) {
+    	super(props);
+    	this.state = {number: '', name: '', year: '', position: ''};
+  	}
 
+	render(){
+		const player={number: this.state.number, name: this.state.name, year: this.state.year, position: this.state.position}
+
+		return <div className="well well-sm">
+			<form className="PlayerForm">
+				<input type='text' placeholder='Number' value={this.state.number} onChange={e => this.setState({number : e.target.value})} />
+				<input type='text' placeholder='Name' value={this.state.name} onChange={e => this.setState({name : e.target.value})} />
+				<input type='text' placeholder='Year' value={this.state.year} onChange={e => this.setState({year : e.target.value})} />
+				<input type='text' placeholder='Position' value={this.state.position} onChange={e => this.setState({position : e.target.value})} />
+				<Button onClick={() => this.props.addNewPlayer(player)} label='Add Player' />
+			</form>
+		</div>
+	}
+}
 
 const PlayerProfile = props =>
 	<div className="well well-sm">
-		<p className="text-center">{props.name}</p>		
+		<p className="text-center">#{props.number} {props.name}</p>		
 		<img className="col-md-3" src="http://www.alvechurchlions.com/wp-content/uploads/2012/09/player_blank.jpeg" height="80" width="80" />
 		<p>Year: {props.year}</p>
 		<p>Position: {props.position}</p>
-		<Button onClick={props.onClick} label={props.selected ? "Remove Player" : "Add Player"} />
+		<Button onClick={props.onClick} label={props.selected ? "Remove Player" : "Add Player to Starting 11"} />
 	</div>
 
 
@@ -67,7 +77,7 @@ class PlayerLists extends React.Component {
 				<h4 className="text-center">Roster</h4>
 					
 				{this.state.unselected.map(player =>
-					<PlayerProfile onClick={() => this.addPlayer(player)} key={player.id} name={player.name} year={player.year} position={player.position} />
+					<PlayerProfile onClick={() => this.addPlayer(player)} key={player.id} name={player.name} year={player.year} position={player.position} number={player.number}/>
 				)}
 			
 			</div>
@@ -75,22 +85,22 @@ class PlayerLists extends React.Component {
 			<div className="col-md-4">
 				<h4 className="text-center">Selected Players</h4>
 				{this.state.selected.map(player =>
-					<PlayerProfile onClick={() => this.removePlayer(player)} selected key={player.id} name={player.name} year={player.year} position={player.position} />
+					<PlayerProfile onClick={() => this.removePlayer(player)} selected key={player.id} name={player.name} year={player.year} position={player.position} number={player.number}/>
 				)}
 			</div>
 		</div>
 	}
 }
 
-const PLAYERS = [{id: "4", name: "Howard Shelburne", position: "Fucking Anywhere", year: "Pretty Damn Old"},
-				{id: "1", name: "Erin Turingan", position: "Cute Girl on the Field", year: "Forever Young"},
-				{id: "10", name: "Lionel Messi", position: "Dominance", year: "28"}]
-
+const PLAYERS = [{id: "4", number: "4", name: "Howard Shelburne", position: "Anywhere", year: "Pretty Damn Old"},
+				{id: "1", number: "1", name: "Erin Turingan", position: "Cute Girl on the Field", year: "Forever Young"},
+				{id: "10", number: "10", name: "Lionel Messi", position: "Dominance", year: "28"}]
+				
 
 ReactDOM.render(
 	<div>
 		<Masthead label="Voyager Academy Men's Soccer"/>
-		<CreatePlayerForm />
+		<CreatePlayerForm addNewPlayer={player => PLAYERS.concat(player)}/>
 
 		<PlayerLists players={PLAYERS} />
 

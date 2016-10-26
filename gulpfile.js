@@ -8,7 +8,7 @@ gulp.task("build-javascript", function () {
 });
 
 gulp.task('watch', function() {
-    gulp.watch('src/**/*.js', ['build-javascript'])
+    gulp.watch('src/**/*', ['build-javascript'])
 }) 
 
 gulp.task('default', ['build-javascript'])
