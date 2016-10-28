@@ -15,7 +15,7 @@ const WeatherUndergroundWidget = () =>
 
 
 const Forum = () =>
-	<div className="container fluid">
+	<div className="col-md-9">
 		<form>
 			<div className="form-group">
 				<textarea className="form-control status-box" rows="2" placeholder="What's on your mind?"></textarea>
