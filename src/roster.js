@@ -48,10 +48,13 @@ class PlayerRoster extends React.Component {
 	constructor (){
 		super();
 		this.state = {players: []};
+		this.count = 0;
 		this.addNewPlayer = this.addNewPlayer.bind(this);
 	}
 
 	addNewPlayer(player){
+		this.count++
+		player.id = this.count
 		const newPlayers = this.state.players.concat(player)
         this.setState({players: newPlayers})
     }
@@ -71,40 +74,37 @@ class PlayerLists extends React.Component {
 	constructor (){
 		super();
 		this.state = {
-			selected: [],
-			unselected: []
+			selectedIds: []
 		};
 		this.addPlayer = this.addPlayer.bind(this);
 		this.removePlayer = this.removePlayer.bind(this);
 	}
 
-	componentWillUpdate(){
-		this.setState({unselected: this.props.players})
-	}
 
 	addPlayer(player){
-		var selected = this.state.selected.concat(player);
-		var unselected = this.state.unselected.slice();
-		unselected.splice(unselected.indexOf(player), 1)
-		this.setState({selected, unselected})
-
+		var selectedIds = this.state.selectedIds.concat(player.id);
+		this.setState({selectedIds})
 	}
 
 	removePlayer(player){
-		var unselected = this.state.unselected.concat(player);
-		var selected = this.state.selected.slice();
-		selected.splice(selected.indexOf(player), 1)
-		this.setState({unselected, selected})
+		var selectedIds = this.state.selectedIds.slice();
+		selectedIds.splice(selectedIds.indexOf(player.id), 1)
+		this.setState({selectedIds})
 	}
 
 	render(){
-		console.log(this.props.players);
+		const {players} = this.props
+		const {selectedIds} = this.state
+
+		const unselected = players.filter(player => selectedIds.indexOf(player.id) < 0)
+		const selected = players.filter(player => selectedIds.indexOf(player.id) >= 0)
+
 
 		return <div>
 			<div className="col-md-4">
 				<h4 className="text-center">Roster</h4>
 					
-				{this.state.unselected.map(player =>
+				{unselected.map(player =>
 					<PlayerProfile onClick={() => this.addPlayer(player)} name={player.name} year={player.year} position={player.position} number={player.number}/>
 				)}
 			
@@ -112,7 +112,7 @@ class PlayerLists extends React.Component {
 
 			<div className="col-md-4">
 				<h4 className="text-center">Selected Players</h4>
-				{this.state.selected.map(player =>
+				{selected.map(player =>
 					<PlayerProfile onClick={() => this.removePlayer(player)} selected name={player.name} year={player.year} position={player.position} number={player.number}/>
 				)}
 			</div>
