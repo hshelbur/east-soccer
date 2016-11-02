@@ -58,6 +58,55 @@ Tabs.Tab.propTypes = {
 	label: React.PropTypes.string.isRequired,
 }
 
+class CreateContactForm extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {name: '', phone: '', email: ''};
+	}
+
+	render(){
+		const contact={name: this.state.name, phone: this.state.phone, email: this.state.email}
+	
+		return <div>
+			<form className="ContactForm">
+				<input type='text' placeholder='Name' value={this.state.name} onChange={e => this.setState({name : e.target.value})} />
+				<input type='number' placeholder='Phone' value={this.state.phone} onChange={e => this.setState({name : e.target.value})} />
+				<input type='text' placeholder='E-Mail' value={this.state.email} onChange={e => this.setState({name : e.target.value})} />
+				<Button onClick={() => this.props.addNewContact(player)} label='Add Contact' />
+			</form>
+		</div>
+	}
+}
+
+class ContactList extends React.Component {
+	constructor () {
+		super();
+		this.state = {contacts: []};
+		this.count = 0;
+		this.addNewContact = this.addNewContact.bind(this);
+	}
+
+	addNewContact(contact){
+		this.count++
+		contact.id = this.count
+		const newContacts = this.state.contacts.concat(contact)
+		this.setState({contacts: newContacts})
+	}
+
+	render(){
+		return <div>
+			<CreateContactForm addNewContact={this.addNewContact}/>
+		</div>
+	}
+}
+
+const ContactProfile = props =>
+	<div className="well well-sm">
+		<p>{props.name}</p>
+		<p>Phone: {props.phone}</p>
+		<p>E-Mail: {props.email}</p>
+	</div>
+
 
 
 const Stats = () =>	
