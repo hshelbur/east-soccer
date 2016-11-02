@@ -48,7 +48,10 @@ const Tabs = props =>
 		</div>
 	</div>
 
-
+const Button = props =>
+	<button onClick={props.onClick}  type="button" className="btn btn-primary" data-toggle="button" aria-pressed="false" autoComplete="off">
+ 		{props.label}
+	</button>
 
 Tabs.Tab = props =>
 	<li className={props.active ? "active" : ""} ><a href={`#${props.label.replace(/\s/g, '')}`} role="tab" data-toggle="tab">{props.label}</a></li>
@@ -70,9 +73,9 @@ class CreateContactForm extends React.Component {
 		return <div>
 			<form className="ContactForm">
 				<input type='text' placeholder='Name' value={this.state.name} onChange={e => this.setState({name : e.target.value})} />
-				<input type='number' placeholder='Phone' value={this.state.phone} onChange={e => this.setState({name : e.target.value})} />
-				<input type='text' placeholder='E-Mail' value={this.state.email} onChange={e => this.setState({name : e.target.value})} />
-				<Button onClick={() => this.props.addNewContact(player)} label='Add Contact' />
+				<input type='text' placeholder='Phone' value={this.state.phone} onChange={e => this.setState({phone : e.target.value})} />
+				<input type='text' placeholder='E-Mail' value={this.state.email} onChange={e => this.setState({email : e.target.value})} />
+				<Button onClick={() => this.props.addNewContact(contact)} label='Add Contact' />
 			</form>
 		</div>
 	}
@@ -94,19 +97,26 @@ class ContactList extends React.Component {
 	}
 
 	render(){
+
+		const {contacts} = this.state
+
 		return <div>
 			<CreateContactForm addNewContact={this.addNewContact}/>
+			{contacts.map(contact =>
+				<ContactProfile name={contact.name} phone={contact.phone} email={contact.email}/>
+			)}
 		</div>
 	}
 }
 
 const ContactProfile = props =>
-	<div className="well well-sm">
-		<p>{props.name}</p>
-		<p>Phone: {props.phone}</p>
-		<p>E-Mail: {props.email}</p>
+	<div className="col-md-3">
+		<div className="well well-sm">
+			<p>{props.name}</p>
+			<p>Phone: {props.phone}</p>
+			<p>E-Mail: {props.email}</p>
+		</div>
 	</div>
-
 
 
 const Stats = () =>	
@@ -145,6 +155,10 @@ const MainPage = () =>
 						
 						<Tabs.Tab label="Weather Forecast">
 							<WeatherUndergroundWidget/>
+						</Tabs.Tab>
+
+						<Tabs.Tab label="Contacts">
+							<ContactList/>
 						</Tabs.Tab>
 						
 						<Tabs.Tab label="Forum">
