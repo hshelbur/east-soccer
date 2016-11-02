@@ -110,7 +110,7 @@ class ContactList extends React.Component {
 }
 
 const ContactProfile = props =>
-	<div className="col-md-3">
+	<div className="col-md-6">
 		<div className="well well-sm">
 			<p>{props.name}</p>
 			<p>Phone: {props.phone}</p>
@@ -142,7 +142,7 @@ const MainPage = () =>
 
 
 			<div className="col-md-9">
-				<div className="container">
+				<div>
 										
 					<Tabs>
 						<Tabs.Tab active label="Schedule">
