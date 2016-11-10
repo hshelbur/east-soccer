@@ -48,7 +48,10 @@ const Tabs = props =>
 		</div>
 	</div>
 
-
+const Button = props =>
+	<button onClick={props.onClick}  type="button" className="btn btn-primary" data-toggle="button" aria-pressed="false" autoComplete="off">
+ 		{props.label}
+	</button>
 
 Tabs.Tab = props =>
 	<li className={props.active ? "active" : ""} ><a href={`#${props.label.replace(/\s/g, '')}`} role="tab" data-toggle="tab">{props.label}</a></li>
@@ -58,6 +61,62 @@ Tabs.Tab.propTypes = {
 	label: React.PropTypes.string.isRequired,
 }
 
+class CreateContactForm extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {name: '', phone: '', email: ''};
+	}
+
+	render(){
+		const contact={name: this.state.name, phone: this.state.phone, email: this.state.email}
+	
+		return <div>
+			<form className="ContactForm">
+				<input type='text' placeholder='Name' value={this.state.name} onChange={e => this.setState({name : e.target.value})} />
+				<input type='text' placeholder='Phone' value={this.state.phone} onChange={e => this.setState({phone : e.target.value})} />
+				<input type='text' placeholder='E-Mail' value={this.state.email} onChange={e => this.setState({email : e.target.value})} />
+				<Button onClick={() => this.props.addNewContact(contact)} label='Add Contact' />
+			</form>
+		</div>
+	}
+}
+
+class ContactList extends React.Component {
+	constructor () {
+		super();
+		this.state = {contacts: []};
+		this.count = 0;
+		this.addNewContact = this.addNewContact.bind(this);
+	}
+
+	addNewContact(contact){
+		this.count++
+		contact.id = this.count
+		const newContacts = this.state.contacts.concat(contact)
+		this.setState({contacts: newContacts})
+	}
+
+	render(){
+
+		const {contacts} = this.state
+
+		return <div>
+			<CreateContactForm addNewContact={this.addNewContact}/>
+			{contacts.map(contact =>
+				<ContactProfile name={contact.name} phone={contact.phone} email={contact.email}/>
+			)}
+		</div>
+	}
+}
+
+const ContactProfile = props =>
+	<div className="col-md-6">
+		<div className="well well-sm">
+			<p>{props.name}</p>
+			<p>Phone: {props.phone}</p>
+			<p>E-Mail: {props.email}</p>
+		</div>
+	</div>
 
 
 const Stats = () =>	
@@ -83,7 +142,7 @@ const MainPage = () =>
 
 
 			<div className="col-md-9">
-				<div className="container">
+				<div>
 										
 					<Tabs>
 						<Tabs.Tab active label="Schedule">
@@ -96,6 +155,10 @@ const MainPage = () =>
 						
 						<Tabs.Tab label="Weather Forecast">
 							<WeatherUndergroundWidget/>
+						</Tabs.Tab>
+
+						<Tabs.Tab label="Contacts">
+							<ContactList/>
 						</Tabs.Tab>
 						
 						<Tabs.Tab label="Forum">
