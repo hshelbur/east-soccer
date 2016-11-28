@@ -1,0 +1,15 @@
+<html>
+	<head>
+		{% if title %}
+		<title>{{ title }} - East Soccer</title>
+		{% else %}
+		<title>Welcome to East Soccer</title>
+		{% endif %}
+	</head>
+
+	<body>
+		<div>East Women's Soccer: <a href="/index">Home</a></div>
+		<hr>
+		{% block content %}{% endblock %}
+	</body>
+</html>
