@@ -62,7 +62,7 @@ class PlayerRoster extends React.Component {
     }
 
     componentDidMount(){
-    	axios.get('/roster')
+    	axios.get('/api/roster')
     		.then(res => {
     			this.setState({players: res.data.players})
     			})
