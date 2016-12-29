@@ -17,10 +17,12 @@ gulp.task("build-styles", function () {
    .pipe(gulp.dest("app/static/styles"));
 });
 
+gulp.task('build', ['clean', 'build-javascript', 'build-styles'])
 
-gulp.task('watch', function() {
+
+gulp.task('watch', ['build'], function() {
     gulp.watch('assets/**/*.js', ['build-javascript'])
     gulp.watch('assets/**/*.css', ['build-styles'])
 }) 
 
-gulp.task('default', ['clean', 'build-javascript', 'build-styles'])
+gulp.task('default', ['build'])
