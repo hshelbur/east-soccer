@@ -6,6 +6,6 @@ api_blueprint = Blueprint('api', __name__)
 def get_roster():
 	return jsonify(players=[
 		{'name':'Howard', 'year':'Freshman', 'position': 'Midfield', 'number':'4'},
-		{'name':'Erin', 'year':'senior', 'position':'Keeper', 'number':'7'}
+		{'name':'Erin', 'year':'Senior', 'position':'Keeper', 'number':'7'}
 	])
 		
