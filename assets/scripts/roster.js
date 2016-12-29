@@ -64,7 +64,7 @@ class PlayerRoster extends React.Component {
     componentDidMount(){
     	axios.get('/roster')
     		.then(res => {
-    			this.setState({players: res.players})
+    			this.setState({players: res.data.players})
     			})
     }
 
