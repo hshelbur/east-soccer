@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 const Masthead = props =>
 	<div className="container fluid">
 		<div className="jumbotron">
@@ -57,6 +59,13 @@ class PlayerRoster extends React.Component {
 		player.id = this.count
 		const newPlayers = this.state.players.concat(player)
         this.setState({players: newPlayers})
+    }
+
+    componentDidMount(){
+    	axios.get('/roster')
+    		.then(res => {
+    			this.setState({players: res.players})
+    			})
     }
 
     render(){

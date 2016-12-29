@@ -1,6 +1,6 @@
 var gulp = require("gulp");
-var babel = require("gulp-babel");
 var del = require('del');
+var webpack = require('webpack-stream')
 
 gulp.task('clean', function() {
 	return del.sync('app/static/*')
@@ -8,7 +8,7 @@ gulp.task('clean', function() {
 
 gulp.task("build-javascript", function () {
  return gulp.src('assets/scripts/**/*.js')
-   .pipe(babel())
+   .pipe(webpack( require('./webpack.config.js') ))
    .pipe(gulp.dest("app/static/scripts"));
 });
 
