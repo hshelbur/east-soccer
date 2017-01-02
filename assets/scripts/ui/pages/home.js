@@ -124,17 +124,9 @@ const ContactProfile = props =>
 const Stats = () =>	
 	<iframe src="https://docs.google.com/spreadsheets/d/1lucBasv0plhda3L5S4SFnxgQ8q__Jj_JVguCX228LyE/pubhtml?widget=true&amp;headers=false" width="700" height="400"></iframe>
 	
-const Masthead = props =>
-	<div className="container fluid">
-		<div className="jumbotron">
-			<h2 className="text-center">{props.label}</h2>
-		</div>
-	</div>
 
 const MainPage = () =>
 	<div>
-
-		<Masthead label="Voyager Academy Men's Soccer"/>
 
 		<div className="container">
 			
