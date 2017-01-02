@@ -1,2 +1,9 @@
+tmp
+*~
+*#
+#*
+.#*
 node_modules/
-dist/
+app/static/
+*.pyc
+vendor/

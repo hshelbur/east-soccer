@@ -1,3 +1,6 @@
+import axios from 'axios'
+import React from 'react'
+
 const Masthead = props =>
 	<div className="container fluid">
 		<div className="jumbotron">
@@ -42,8 +45,6 @@ class CreatePlayerForm extends React.Component {
 	}
 }
 
-
-
 class PlayerRoster extends React.Component {
 	constructor (){
 		super();
@@ -53,10 +54,20 @@ class PlayerRoster extends React.Component {
 	}
 
 	addNewPlayer(player){
-		this.count++
-		player.id = this.count
-		const newPlayers = this.state.players.concat(player)
-        this.setState({players: newPlayers})
+		axios.post('/api/roster', player)
+			.then(res => {
+				this.count++
+				player.id = this.count
+				const newPlayers = this.state.players.concat(player)
+		        this.setState({players: newPlayers})
+			})
+    }
+
+    componentDidMount(){
+    	axios.get('/api/roster')
+    		.then(res => {
+    			this.setState({players: res.data.players})
+    			})
     }
 
     render(){
@@ -120,14 +131,11 @@ class PlayerLists extends React.Component {
 	}
 }
 
-				
-
-ReactDOM.render(
+			
+const Roster = () => 
 	<div>
 		<Masthead label="Voyager Academy Men's Soccer"/>
 		<PlayerRoster/>
+	</div>
 
-	</div>,
-
-	document.getElementById("app")
-)
+export default Roster
