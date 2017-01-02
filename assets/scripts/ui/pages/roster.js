@@ -8,8 +8,18 @@ const PlayerProfile = props =>
 		<img className="col-md-3" src="http://www.alvechurchlions.com/wp-content/uploads/2012/09/player_blank.jpeg" height="80" width="80" />
 		<p>Year: {props.year}</p>
 		<p>Position: {props.position}</p>
-		<Button onClick={props.onClick} label={props.selected ? "Remove Player" : "Add Player to Starting 11"} />
+		<Button onClick={props.togglePlayer} label={props.selected ? "Remove Player" : "Add Player to Starting 11"} />
+		<Button onClick={props.deletePlayer} label='Delete Player' />
 	</div>
+
+PlayerProfile.propTypes = {
+	number: React.PropTypes.number.isRequired,
+	name: React.PropTypes.string.isRequired,
+	year: React.PropTypes.string.isRequired,
+	position: React.PropTypes.string.isRequired,
+	togglePlayer: React.PropTypes.func.isRequired,
+	deletePlayer: React.PropTypes.func.isRequired,
+}
 
 
 
@@ -33,42 +43,6 @@ class CreatePlayerForm extends React.Component {
 		</div>
 	}
 }
-
-class PlayerRoster extends React.Component {
-	constructor (){
-		super();
-		this.state = {players: []};
-		this.count = 0;
-		this.addNewPlayer = this.addNewPlayer.bind(this);
-	}
-
-	addNewPlayer(player){
-		axios.post('/api/roster', player)
-			.then(res => {
-				this.count++
-				player.id = this.count
-				const newPlayers = this.state.players.concat(player)
-		        this.setState({players: newPlayers})
-			})
-    }
-
-    componentDidMount(){
-    	axios.get('/api/roster')
-    		.then(res => {
-    			this.setState({players: res.data.players})
-    			})
-    }
-
-    render(){
-    	return <div>
-    		<CreatePlayerForm addNewPlayer={this.addNewPlayer}/>
-    		<PlayerLists players={this.state.players}/>
-    	</div>
-    }
-	
-}
-
-
 
 class PlayerLists extends React.Component {
 	constructor (){
@@ -105,7 +79,7 @@ class PlayerLists extends React.Component {
 				<h4 className="text-center">Roster</h4>
 					
 				{unselected.map(player =>
-					<PlayerProfile onClick={() => this.addPlayer(player)} name={player.name} year={player.year} position={player.position} number={player.number}/>
+					<PlayerProfile {...player} togglePlayer={() => this.addPlayer(player)} deletePlayer={() => this.props.deletePlayer(player)} />
 				)}
 			
 			</div>
@@ -113,11 +87,54 @@ class PlayerLists extends React.Component {
 			<div className="col-md-4">
 				<h4 className="text-center">Selected Players</h4>
 				{selected.map(player =>
-					<PlayerProfile onClick={() => this.removePlayer(player)} selected name={player.name} year={player.year} position={player.position} number={player.number}/>
+					<PlayerProfile {...player} selected togglePlayer={() => this.removePlayer(player)} deletePlayer={() => this.props.deletePlayer(player)} />
 				)}
 			</div>
 		</div>
 	}
+}
+
+
+class PlayerRoster extends React.Component {
+	constructor (){
+		super();
+		this.state = {players: []};
+		this.addNewPlayer = this.addNewPlayer.bind(this);
+		this.deletePlayer = this.deletePlayer.bind(this);
+	}
+
+	addNewPlayer(player){
+		axios.post('/api/roster', player)
+			.then(res => {
+				player.id = res.data.id
+				const newPlayers = this.state.players.concat(player)
+		        this.setState({players: newPlayers})
+			})
+    }
+
+    deletePlayer(player){
+    	axios.delete(`/api/roster/${player.id}`)
+    		.then(res => {
+    			var players = this.state.players.slice();
+				players.splice(players.indexOf(player), 1)
+				this.setState({players})
+    		})
+    }
+
+    componentDidMount(){
+    	axios.get('/api/roster')
+    		.then(res => {
+    			this.setState({players: res.data.players})
+    			})
+    }
+
+    render(){
+    	return <div>
+    		<CreatePlayerForm addNewPlayer={this.addNewPlayer}/>
+    		<PlayerLists players={this.state.players} deletePlayer={this.deletePlayer}/>
+    	</div>
+    }
+	
 }
 
 

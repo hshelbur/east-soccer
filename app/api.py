@@ -7,7 +7,7 @@ api_blueprint = Blueprint('api', __name__)
 @api_blueprint.route('/roster')
 def get_roster():
 	players = Player.query.all()
-	return jsonify(players=[{'name': player.name, 'year': player.year, 'position': player.position, 'number': player.number} for player in players])	
+	return jsonify(players=[{'name': player.name, 'year': player.year, 'position': player.position, 'number': player.number, 'id': player.id} for player in players])	
 
 @api_blueprint.route('/roster', methods=['POST'])
 def add_player():
@@ -16,3 +16,10 @@ def add_player():
 	db.session.add(player)
 	db.session.commit()
 	return jsonify(id=player.id)
+
+@api_blueprint.route('/roster/<player_id>', methods=['DELETE'])
+def delete_player(player_id):
+	player = Player.query.get(player_id)
+	db.session.delete(player)
+	db.session.commit()
+	return jsonify({})
