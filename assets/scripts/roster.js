@@ -55,10 +55,13 @@ class PlayerRoster extends React.Component {
 	}
 
 	addNewPlayer(player){
-		this.count++
-		player.id = this.count
-		const newPlayers = this.state.players.concat(player)
-        this.setState({players: newPlayers})
+		axios.post('/api/roster', player)
+			.then(res => {
+				this.count++
+				player.id = this.count
+				const newPlayers = this.state.players.concat(player)
+		        this.setState({players: newPlayers})
+			})
     }
 
     componentDidMount(){
