@@ -1,3 +1,5 @@
+import React from 'react'
+
 
 const WeatherUndergroundWidget = () =>
 	<span style={{
@@ -172,3 +174,4 @@ const MainPage = () =>
 
 	</div>
 
+export default MainPage
