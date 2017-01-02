@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React from 'react'
-import Button from '../components/button'
+import Button, {WarningButton} from '../components/button'
 
 const PlayerProfile = props =>
 	<div className="well well-sm">
@@ -9,7 +9,7 @@ const PlayerProfile = props =>
 		<p>Year: {props.year}</p>
 		<p>Position: {props.position}</p>
 		<Button onClick={props.togglePlayer} label={props.selected ? "Remove Player" : "Add Player to Starting 11"} />
-		<Button onClick={props.deletePlayer} label='Delete Player' />
+		<WarningButton onClick={props.deletePlayer} label='Delete Player' />
 	</div>
 
 PlayerProfile.propTypes = {
