@@ -1,4 +1,6 @@
 import React from 'react'
+import Button from '../components/button'
+import Tabs from '../components/tabs'
 
 
 const WeatherUndergroundWidget = () =>
@@ -32,36 +34,6 @@ const Forum = () =>
 		</ul>
 	</div>
 	
-
-const Tabs = props => 
-	<div>
-		<ul className="nav nav-tabs" role="tablist">{props.children}</ul>
-
-			<div className="tab-content">
-
-			{React.Children.map(props.children, tab => {
-				var klass = "tab-pane active"
-				if(!tab.props.active){
-					klass = "tab-pane"
-				}
-				
-				return <div className={klass} id={tab.props.label.replace(/\s/g, '')}>{tab.props.children}</div>
-			})}
-		</div>
-	</div>
-
-const Button = props =>
-	<button onClick={props.onClick}  type="button" className="btn btn-primary" data-toggle="button" aria-pressed="false" autoComplete="off">
- 		{props.label}
-	</button>
-
-Tabs.Tab = props =>
-	<li className={props.active ? "active" : ""} ><a href={`#${props.label.replace(/\s/g, '')}`} role="tab" data-toggle="tab">{props.label}</a></li>
-
-Tabs.Tab.propTypes = {
-	active: React.PropTypes.bool,
-	label: React.PropTypes.string.isRequired,
-}
 
 class CreateContactForm extends React.Component {
 	constructor(props) {
