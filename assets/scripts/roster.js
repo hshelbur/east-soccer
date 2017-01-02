@@ -1,4 +1,5 @@
 import axios from 'axios'
+import React from 'react'
 
 const Masthead = props =>
 	<div className="container fluid">
@@ -43,8 +44,6 @@ class CreatePlayerForm extends React.Component {
 		</div>
 	}
 }
-
-
 
 class PlayerRoster extends React.Component {
 	constructor (){
@@ -132,14 +131,11 @@ class PlayerLists extends React.Component {
 	}
 }
 
-				
-
-ReactDOM.render(
+			
+const Roster = () => 
 	<div>
 		<Masthead label="Voyager Academy Men's Soccer"/>
 		<PlayerRoster/>
+	</div>
 
-	</div>,
-
-	document.getElementById("app")
-)
+export default Roster

@@ -1,7 +1,7 @@
 var path = require('path')
 
 module.exports = {
-	entry: './assets/scripts/roster.js',
+	entry: './assets/scripts/app.js',
 	output: {
 		path: path.resolve(__dirname, 'app', 'static', 'scripts'),
 		filename: 'app.js'
