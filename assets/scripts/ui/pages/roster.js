@@ -1,17 +1,6 @@
 import axios from 'axios'
 import React from 'react'
-
-const Masthead = props =>
-	<div className="container fluid">
-		<div className="jumbotron">
-			<h2 className="text-center">{props.label}</h2>
-		</div>
-	</div>
-
-const Button = props =>
-	<button onClick={props.onClick}  type="button" className="btn btn-primary" data-toggle="button" aria-pressed="false" autoComplete="off">
- 		{props.label}
-	</button>
+import Button from '../components/button'
 
 const PlayerProfile = props =>
 	<div className="well well-sm">
@@ -131,11 +120,5 @@ class PlayerLists extends React.Component {
 	}
 }
 
-			
-const Roster = () => 
-	<div>
-		<Masthead label="Voyager Academy Men's Soccer"/>
-		<PlayerRoster/>
-	</div>
 
-export default Roster
+export default PlayerRoster
