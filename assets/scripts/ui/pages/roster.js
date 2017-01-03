@@ -21,9 +21,25 @@ PlayerProfile.propTypes = {
 	deletePlayer: React.PropTypes.func.isRequired,
 }
 
+class AddTeamForm extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {name: ''}
+	}
 
+	render(){
+		const team={name: this.state.name}
 
-class CreatePlayerForm extends React.Component {
+		return <div className="well well-sm">
+			<form className="TeamForm">
+				<input type='text' placeholder='Team Name' value={this.state.name} onChange={e => this.setState({name : e.target.value})} />
+				<Button onClick={() => this.props.addNewTeam(team)} label='Add New Team' />
+			</form>
+		</div>
+	}
+}
+
+class AddPlayerForm extends React.Component {
 	constructor(props) {
     	super(props);
     	this.state = {number: '', name: '', year: '', position: ''};
@@ -98,13 +114,15 @@ class PlayerLists extends React.Component {
 class PlayerRoster extends React.Component {
 	constructor (){
 		super();
-		this.state = {players: []};
+		this.state = {players: [], teams: []};
 		this.addNewPlayer = this.addNewPlayer.bind(this);
 		this.deletePlayer = this.deletePlayer.bind(this);
+		this.addNewTeam = this.addNewTeam.bind(this);
+		this.deleteTeam = this.deleteTeam.bind(this);
 	}
 
 	addNewPlayer(player){
-		axios.post('/api/roster', player)
+		axios.post('/api/players', player)
 			.then(res => {
 				player.id = res.data.id
 				const newPlayers = this.state.players.concat(player)
@@ -112,8 +130,26 @@ class PlayerRoster extends React.Component {
 			})
     }
 
+    addNewTeam(team){
+    	axios.post('/api/teams', team)
+    		.then(res => {
+    			team.id = res.data.id
+    			const newTeams = this.state.teams.concat(team)
+    			this.setState({teams: newTeams})
+    		})
+    }
+
+    deleteTeam(team){
+    	axios.delete(`/api/teams/${team.id}`)
+    		.then(res => {
+    			var teams = this.state.teams.slice();
+				teams.splice(teams.indexOf(team), 1)
+				this.setState({teams})
+    		})
+    }
+
     deletePlayer(player){
-    	axios.delete(`/api/roster/${player.id}`)
+    	axios.delete(`/api/players/${player.id}`)
     		.then(res => {
     			var players = this.state.players.slice();
 				players.splice(players.indexOf(player), 1)
@@ -122,7 +158,7 @@ class PlayerRoster extends React.Component {
     }
 
     componentDidMount(){
-    	axios.get('/api/roster')
+    	axios.get('/api/players')
     		.then(res => {
     			this.setState({players: res.data.players})
     			})
@@ -130,7 +166,8 @@ class PlayerRoster extends React.Component {
 
     render(){
     	return <div>
-    		<CreatePlayerForm addNewPlayer={this.addNewPlayer}/>
+    		<AddTeamForm addNewTeam={this.addNewTeam}/>
+    		<AddPlayerForm addNewPlayer={this.addNewPlayer}/>
     		<PlayerLists players={this.state.players} deletePlayer={this.deletePlayer}/>
     	</div>
     }
