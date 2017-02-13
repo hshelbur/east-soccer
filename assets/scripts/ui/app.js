@@ -1,13 +1,11 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import Roster from './pages/roster'
-import Home from './pages/home'
+import Training from './pages/training'
 import Header from './layout/header'
 
 class App extends React.Component {
 	constructor (){
 		super();
-		this.state = {page: 'home'};
+		this.state = {page: 'training'};
 	}
 
 	render(){
@@ -19,15 +17,13 @@ class App extends React.Component {
 				<div className="container">
 					<div className="collapse navbar-collapse">
 						<ul className="nav navbar-nav">
-							<li className={page === 'home' && 'active'}><a onClick={() => this.setState({page: 'home'})}>Home</a></li>
-							<li className={page === 'roster' && 'active'}><a onClick={() => this.setState({page: 'roster'})}>Roster</a></li>
+							<li className={page === 'training' && 'active'}><a onClick={() => this.setState({page: 'training'})}>Training</a></li>
 						</ul>
 					</div>
 				</div>
 			</nav>
 			<div className='container'>	
-				{page === 'home' && <Home />}
-				{page === 'roster' && <Roster />}
+				{page === 'training' && <Training />}
 			</div>
 		</div>
 	}

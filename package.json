@@ -32,7 +32,9 @@
   },
   "dependencies": {
     "axios": "^0.15.3",
-    "react": "^15.4.1",
-    "react-dom": "^15.4.1"
+    "konva": "^1.4.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.1",
+    "react-konva": "^1.1.1"
   }
 }

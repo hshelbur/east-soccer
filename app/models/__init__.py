@@ -6,7 +6,7 @@ class Player(db.Model):
 	year = db.Column(db.String(20), nullable=False)
 	position = db.Column(db.String(80), nullable=False)
 	number = db.Column(db.Integer, nullable=False)
-	team_id = db.Column(db.Integer, ForeignKey('team.id'))
+	team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
 
 	team = db.relationship('Team', back_populates='players')
 
